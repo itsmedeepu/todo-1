@@ -191,7 +191,10 @@ upbutton.addEventListener("click", (e) => {
     });
 
     localStorage.setItem("todos", JSON.stringify(updatedtods));
+    window.alert("todo updated sucessfully!!");
     fetchalltodos();
+  } else {
+    window.alert("please dont leave blank");
   }
 });
 
