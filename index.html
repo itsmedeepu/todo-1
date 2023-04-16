@@ -54,9 +54,76 @@
 
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary btn-block mb-4">
-              Send
+              Add
             </button>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!---EDIT MODAL-->
+
+    <!-- Modal -->
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="editmodal"
+      data-mdb-backdrop="static"
+      data-mdb-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Update Todo</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-mdb-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form class="to-do">
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+                <input type="text" id="edit-title" class="form-control" />
+                <label class="form-label" for="form4Example1">Title</label>
+              </div>
+
+              <!-- Message input -->
+              <div class="form-outline mb-4">
+                <textarea
+                  class="form-control"
+                  id="edit-description"
+                  rows="4"
+                ></textarea>
+                <label class="form-label" for="form4Example3"
+                  >Add Description</label
+                >
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-mdb-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              data-mdb-dismiss="modal"
+              id="update"
+              class="btn btn-primary update"
+            >
+              update
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -113,7 +113,8 @@ function fetchalltodos() {
       <button class="btn btn-sm btn-danger float-end delete" data-id="${e.title}">
         <i class="fas fa-trash"> </i>DELETE
       </button>
-      <button class="btn btn-sm btn-success float-end me-2 edit">
+      <button class="btn btn-sm btn-success float-end me-2 edit" data-id="${e.title}"  data-mdb-toggle="modal"
+      data-mdb-target="#editmodal">
         <i class="fas fa-pen-to-square"> </i>EDIT
       </button>
     </div>
@@ -130,6 +131,14 @@ row.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
     let title = e.target.getAttribute("data-id");
     deleteTodos(title);
+  }
+  if (e.target.classList.contains("edit")) {
+    let title = e.target.getAttribute("data-id");
+
+    let todo = fetchToDosByTitle(title);
+
+    document.querySelector("#edit-title").value = todo.title;
+    document.querySelector("#edit-description").value = todo.description;
   }
 });
 
@@ -148,4 +157,48 @@ function deleteTodos(title) {
     localStorage.setItem("todos", JSON.stringify(removed));
     fetchalltodos();
   }
+}
+
+//fetch todo by title
+
+function fetchToDosByTitle(title) {
+  let todos = JSON.parse(localStorage.getItem("todos"));
+
+  let todo = todos.find((e) => {
+    if (e.title === title) return e;
+  });
+
+  return todo;
+}
+
+//update the todos
+
+let upbutton = document.querySelector("#update");
+
+upbutton.addEventListener("click", (e) => {
+  e.preventDefault();
+  let title = document.querySelector("#edit-title").value;
+  let description = document.querySelector("#edit-description").value;
+  if (validate(title, description)) {
+    let todos = getAllTodos();
+    let updatedtods = todos.map((e) => {
+      if (e.title === title) {
+        e.description = description;
+        e.date = getDate();
+        return e;
+      }
+      return e;
+    });
+
+    localStorage.setItem("todos", JSON.stringify(updatedtods));
+    fetchalltodos();
+  }
+});
+
+//get all todos
+
+function getAllTodos() {
+  let alltods = JSON.parse(localStorage.getItem("todos"));
+
+  return alltods;
 }
