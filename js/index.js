@@ -125,7 +125,7 @@ function fetchalltodos() {
       class="spinner-border spinner-border-sm text-white d-none"
       role="status"
     ></span>
-        <i class="fas fa-trash"> </i><span class="delete-text">Delete</span>
+         </i><span class="delete-text">Delete</span>
       </button>
       <button class="btn btn-sm btn-success float-end me-2 edit" data-id="${e.title}"  data-mdb-toggle="modal"
       data-mdb-target="#editmodal">
@@ -133,7 +133,7 @@ function fetchalltodos() {
       class="spinner-border spinner-border-sm text-white d-none"
       role="status"
     ></span>
-        <i class="fas fa-pen-to-square"> </i><span class="edit-text">Edit</span>
+        </i><span class="edit-text">Edit</span>
       </button>
     </div>
   </div>`;
