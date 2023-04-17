@@ -7,6 +7,7 @@
 
 let form = document.querySelector(".to-do");
 
+//submit the form
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -61,6 +62,7 @@ function addtodos() {
   return todo;
 }
 
+//dater funciton for fetching current date
 function getDate() {
   const date = new Date();
   const months = [
@@ -84,6 +86,7 @@ function getDate() {
   return dates;
 }
 
+//fetch all todos and pass through the frontend
 function fetchalltodos() {
   let row = document.querySelector("#row");
   if (localStorage.getItem("todos") === null) {
@@ -100,6 +103,7 @@ function fetchalltodos() {
 
   let todos = document.querySelectorAll("#todos");
 
+  //before fetching first remove all exist todos
   todos.forEach((e) => {
     e.remove();
   });
@@ -108,10 +112,9 @@ function fetchalltodos() {
     let col = document.createElement("div");
     col.setAttribute("class", "col-lg-3");
     col.setAttribute("id", "todos");
-    col.innerHTML = `<div class="card">
-    <div class="card-header">Featured</div>
+    col.innerHTML = `<div class="card shadow-lg">
+    <div class="card-header">${e.title}</div>
     <div class="card-body">
-      <h5 class="card-title">${e.title}</h5>
       <p class="card-text">
         ${e.description}
       </p>
@@ -120,14 +123,14 @@ function fetchalltodos() {
     <div class="card-footer">
       <p class="text-muted float-start">${e.date}</p>
 
-      <button class="btn btn-sm btn-danger float-end delete" data-id="${e.title}">
+      <button class="btn btn-sm btn-rounded  btn-danger float-end delete" data-id="${e.title}">
       <span
       class="spinner-border spinner-border-sm text-white d-none"
       role="status"
     ></span>
          </i><span class="delete-text">Delete</span>
       </button>
-      <button class="btn btn-sm btn-success float-end me-2 edit" data-id="${e.title}"  data-mdb-toggle="modal"
+      <button class="btn  btn-success btn-sm btn-rounded float-end me-2 edit" data-id="${e.title}"  data-mdb-toggle="modal"
       data-mdb-target="#editmodal">
       <span
       class="spinner-border spinner-border-sm text-white d-none"
@@ -141,15 +144,13 @@ function fetchalltodos() {
     row.append(col);
   });
 }
-fetchalltodos();
-modal();
 
 const row = document.querySelector("#row");
-
+//delete the todos
 row.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
     let title = e.target.getAttribute("data-id");
-    e.target.childNodes[4].innerText = "Deleting..";
+    e.target.childNodes[4].innerText = "Deleting.....";
     setTimeout(() => {
       e.target.childNodes[1].classList.toggle("d-none");
       e.target.childNodes[4].innerText = "Delete";
@@ -203,7 +204,7 @@ function fetchToDosByTitle(title) {
 
 //update the todos
 
-//setmodal defualt configs
+//setmodal defualt configs for modal styling
 
 function modal() {
   let form = document.querySelector(".todo-from");
@@ -218,6 +219,7 @@ function modal() {
   status.childNodes[3].classList.toggle("d-none");
 }
 
+//update the todos
 let upbutton = document.querySelector("#update");
 
 upbutton.addEventListener("click", (e) => {
@@ -255,3 +257,9 @@ function getAllTodos() {
 
   return alltods;
 }
+
+//on window load fetch all todos from localstorage
+fetchalltodos();
+
+//modal default config settings ///
+modal();
