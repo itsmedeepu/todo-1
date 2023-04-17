@@ -15,10 +15,20 @@ form.addEventListener("submit", (e) => {
   if (validate(title, discription)) {
     let todo = getTodos(title, discription);
 
+    let spinner = document.querySelector(".spinner-border");
+    let buttontext = document.querySelector(".button-text");
+
     let todos = addtodos();
+
     todos.push(todo);
     localStorage.setItem("todos", JSON.stringify(todos));
-    fetchalltodos();
+    buttontext.innerText = "Adding....";
+    setTimeout(() => {
+      spinner.classList.toggle("d-none");
+      fetchalltodos();
+      buttontext.innerText = "Add";
+    }, 3000);
+    spinner.classList.toggle("d-none");
   } else {
     alert("please dont leave blank");
   }
@@ -111,11 +121,19 @@ function fetchalltodos() {
       <p class="text-muted float-start">${e.date}</p>
 
       <button class="btn btn-sm btn-danger float-end delete" data-id="${e.title}">
-        <i class="fas fa-trash"> </i>DELETE
+      <span
+      class="spinner-border spinner-border-sm text-white d-none"
+      role="status"
+    ></span>
+        <i class="fas fa-trash"> </i><span class="delete-text">Delete</span>
       </button>
       <button class="btn btn-sm btn-success float-end me-2 edit" data-id="${e.title}"  data-mdb-toggle="modal"
       data-mdb-target="#editmodal">
-        <i class="fas fa-pen-to-square"> </i>EDIT
+      <span
+      class="spinner-border spinner-border-sm text-white d-none"
+      role="status"
+    ></span>
+        <i class="fas fa-pen-to-square"> </i><span class="edit-text">Edit</span>
       </button>
     </div>
   </div>`;
@@ -124,21 +142,33 @@ function fetchalltodos() {
   });
 }
 fetchalltodos();
+modal();
 
 const row = document.querySelector("#row");
 
 row.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
     let title = e.target.getAttribute("data-id");
-    deleteTodos(title);
+    e.target.childNodes[4].innerText = "Deleting..";
+    setTimeout(() => {
+      e.target.childNodes[1].classList.toggle("d-none");
+      e.target.childNodes[4].innerText = "Delete";
+      deleteTodos(title);
+    }, 2000);
+    e.target.childNodes[1].classList.toggle("d-none");
   }
   if (e.target.classList.contains("edit")) {
     let title = e.target.getAttribute("data-id");
 
-    let todo = fetchToDosByTitle(title);
-
-    document.querySelector("#edit-title").value = todo.title;
-    document.querySelector("#edit-description").value = todo.description;
+    e.target.childNodes[4].innerText = "Loading....";
+    setTimeout(() => {
+      e.target.childNodes[1].classList.toggle("d-none");
+      e.target.childNodes[4].innerText = "Edit";
+      let todo = fetchToDosByTitle(title);
+      document.querySelector("#edit-title").value = todo.title;
+      document.querySelector("#edit-description").value = todo.description;
+    }, 2000);
+    e.target.childNodes[1].classList.toggle("d-none");
   }
 });
 
@@ -173,10 +203,26 @@ function fetchToDosByTitle(title) {
 
 //update the todos
 
+//setmodal defualt configs
+
+function modal() {
+  let form = document.querySelector(".todo-from");
+  let status = document.querySelector(".modal-status");
+  setTimeout(() => {
+    form.classList.toggle("d-none");
+    status.childNodes[1].classList.toggle("d-none");
+    status.childNodes[3].classList.toggle("d-none");
+  }, 3000);
+  form.classList.toggle("d-none");
+  status.childNodes[1].classList.toggle("d-none");
+  status.childNodes[3].classList.toggle("d-none");
+}
+
 let upbutton = document.querySelector("#update");
 
 upbutton.addEventListener("click", (e) => {
   e.preventDefault();
+
   let title = document.querySelector("#edit-title").value;
   let description = document.querySelector("#edit-description").value;
   if (validate(title, description)) {
@@ -189,10 +235,14 @@ upbutton.addEventListener("click", (e) => {
       }
       return e;
     });
+    let todo = fetchToDosByTitle(title);
+    document.querySelector("#edit-title").value = todo.title;
+    document.querySelector("#edit-description").value = todo.description;
 
     localStorage.setItem("todos", JSON.stringify(updatedtods));
-    window.alert("todo updated sucessfully!!");
     fetchalltodos();
+
+    window.alert("todo updated sucessfully!!");
   } else {
     window.alert("please dont leave blank");
   }

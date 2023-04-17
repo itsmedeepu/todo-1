@@ -53,8 +53,12 @@
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4">
-              Add
+            <button type="submit" class="btn btn-primary btn-block mb-4 submit">
+              <span
+                class="spinner-border spinner-border-sm text-white d-none"
+                role="status"
+              ></span>
+              <span class="button-text">Add</span>
             </button>
           </form>
         </div>
@@ -87,7 +91,16 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form class="to-do">
+            <div class="modal-status">
+              <span
+                class="spinner-border spinner-border-sm d-none"
+                role="status"
+              ></span>
+              <span class="modal-status-text d-none"
+                >Fetching... todo sit back</span
+              >
+            </div>
+            <form class="to-do todo-from">
               <!-- Name input -->
               <div class="form-outline mb-4">
                 <input type="text" id="edit-title" class="form-control" />
@@ -121,7 +134,11 @@
               id="update"
               class="btn btn-primary update"
             >
-              update
+              <span
+                class="spinner-border spinner-border-sm text-white d-none"
+                role="status"
+              ></span>
+              <span class="update-text">update</span>
             </button>
           </div>
         </div>
